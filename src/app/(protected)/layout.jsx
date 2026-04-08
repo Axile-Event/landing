@@ -1,7 +1,7 @@
 "use client";
 
 import { Loader2 } from "lucide-react";
-import { useAuth } from "../@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function ProtectedLayout({ children }) {
   const { loading, authenticated } = useAuth();

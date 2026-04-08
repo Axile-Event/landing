@@ -1,14 +1,14 @@
 "use client";
 
 import React, { useState, useEffect, Suspense } from "react";
-import { Button } from "../@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { motion } from 'framer-motion'
 import toast from 'react-hot-toast'
-import api from "../@/lib/axios";
+import api from "@/lib/axios";
 import { Mail, Lock, Loader2, ArrowRight, ArrowLeft, Eye, EyeOff } from "lucide-react";
-import BackgroundCarousel from "../@/components/BackgroundCarousel";
+import BackgroundCarousel from "@/components/BackgroundCarousel";
 import Logo from "@/components/Logo";
 
 const ResetPasswordContent = () => {

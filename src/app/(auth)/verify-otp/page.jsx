@@ -5,11 +5,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
-import api from "../@/lib/axios";
+import api from "@/lib/axios";
 import { Loader2, CheckCircle, Clock } from "lucide-react";
 import Logo from "@/components/Logo";
 import { getErrorMessage } from "@/lib/utils";
-import BackgroundCarousel from "../@/components/BackgroundCarousel";
+import BackgroundCarousel from "@/components/BackgroundCarousel";
 
 const VerifyOTPContent = () => {
   const router = useRouter();

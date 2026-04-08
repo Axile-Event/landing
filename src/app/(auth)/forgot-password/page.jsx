@@ -1,14 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
-import { Button } from "../@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion } from 'framer-motion'
 import toast from 'react-hot-toast'
-import api from "../@/lib/axios";
+import api from "@/lib/axios";
 import { Mail, Loader2, ArrowRight, ArrowLeft } from "lucide-react";
-import BackgroundCarousel from "../@/components/BackgroundCarousel";
+import BackgroundCarousel from "@/components/BackgroundCarousel";
 import Logo from "@/components/Logo";
 
 const ForgotPassword = () => {

@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import api from "../../../../@/lib/axios";
+import api from "../@/lib/axios";
 import { queryKeys } from "@/lib/query-keys";
 import { 
   Copy, 
@@ -30,7 +30,7 @@ import {
   Megaphone
 } from "lucide-react";
 import toast from "react-hot-toast";
-import { getImageUrl, getErrorMessage } from "../../../../@/lib/utils";
+import { getImageUrl, getErrorMessage } from "../@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 import CustomDropdown from "@/components/ui/CustomDropdown";
 import BulkBookForAttendeeModal from "@/components/organizer/BulkBookForAttendeeModal";

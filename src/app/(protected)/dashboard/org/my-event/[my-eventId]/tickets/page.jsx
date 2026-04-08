@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import api from "../../../../../@/lib/axios";
+import api from "../../@/lib/axios";
 import { Plus, Trash2, Edit2, ArrowLeft, Loader2, Save, X, Ticket, AlertTriangle } from "lucide-react";
 import toast from "react-hot-toast";
 import PinPromptModal from "@/components/PinPromptModal";

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import api from "../../../../../@/lib/axios";
+import api from "../../@/lib/axios";
 import { 
   ArrowLeft, 
   Users, 

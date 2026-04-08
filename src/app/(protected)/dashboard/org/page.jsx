@@ -2,15 +2,15 @@
 
 import { useEffect, useState, useRef } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import api from "../../@/lib/axios";
+import api from "../@/lib/axios";
 import { Ticket, Users, Calendar, TrendingUp, DollarSign, Clock, Plus, ChevronRight, ShieldAlert, X, Eye, EyeOff, MapPin, QrCode as QrCodeIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import useAuthStore from "../../@/store/authStore";
+import useAuthStore from "../@/store/authStore";
 import { toast } from "react-hot-toast";
-import useOrganizerStore from "../../@/store/orgStore";
+import useOrganizerStore from "../@/store/orgStore";
 import { OrganizerDashboardSkeleton } from "@/components/skeletons";
 import OtpPinInput from "@/components/OtpPinInput";
-import { getImageUrl } from "../../@/lib/utils";
+import { getImageUrl } from "../@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { queryKeys } from "@/lib/query-keys";
 

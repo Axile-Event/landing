@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
-import api from '../../../@/lib/axios';
+import api from '@/lib/axios';
 import useAuthStore from '@/store/authStore';
 import { hasPinSet, storePinLocally, updateLocalPin } from '@/lib/pinPrompt';
 import PinPromptModal from '@/components/PinPromptModal';

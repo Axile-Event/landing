@@ -57,7 +57,7 @@ const Header = () => {
 
   const handleLogout = () => {
     logout();
-    window.location.href = "https://axile.ng/login";
+    window.location.href = "https://app.axile.ng/login";
   };
 
   // Capitalize role for display
@@ -130,12 +130,12 @@ const Header = () => {
               </>
             ) : (
               <div className="flex items-center gap-3">
-                <Link href="https://axile.ng/login">
+                <Link href="https://app.axile.ng/login">
                   <Button variant="ghost" className="text-muted-foreground hover:text-foreground">
                     Login
                   </Button>
                 </Link>
-                <Link href="https://axile.ng/signup">
+                <Link href="https://app.axile.ng/signup">
                   <Button className="bg-primary hover:bg-primary/90 text-white px-6">
                     Get Started
                   </Button>
@@ -337,12 +337,12 @@ const Header = () => {
                         <Briefcase className="h-5 w-5" />
                         Hiring
                       </Link>
-                      <Link href="https://axile.ng/login" onClick={closeMenu}>
+                      <Link href="https://app.axile.ng/login" onClick={closeMenu}>
                         <Button variant="outline" className="w-full border-gray-700 text-gray-300 h-12">
                           Login
                         </Button>
                       </Link>
-                      <Link href="https://axile.ng/signup" onClick={closeMenu}>
+                      <Link href="https://app.axile.ng/signup" onClick={closeMenu}>
                         <Button className="w-full bg-rose-600 hover:bg-rose-700 text-white h-12">
                           Get Started
                         </Button>

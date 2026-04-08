@@ -366,7 +366,7 @@ const EventDetailsClient = ({ event_id, initialEvent }) => {
         localStorage.setItem(`booking_${bookingId}`, JSON.stringify(bookingDataForCheckout));
         
         toast.success("Booking created! Redirecting to payment...", { id: toastId });
-        router.push(`/checkout/payment/${bookingId}`);
+        router.push(`https://app.axile.ng/checkout/payment/${bookingId}`);
         return;
       }
 

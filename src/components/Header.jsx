@@ -57,7 +57,7 @@ const Header = () => {
 
   const handleLogout = () => {
     logout();
-    router.push("/login");
+    window.location.href = "https://axile.ng/login";
   };
 
   // Capitalize role for display
@@ -95,7 +95,7 @@ const Header = () => {
             <Link href="/events" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
               Find Events
             </Link>
-            <Link href="/referral" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+            <Link href="https://referral.axile.ng" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
               Referral
             </Link>
             <Link href="/features" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
@@ -130,12 +130,12 @@ const Header = () => {
               </>
             ) : (
               <div className="flex items-center gap-3">
-                <Link href="/login">
+                <Link href="https://axile.ng/login">
                   <Button variant="ghost" className="text-muted-foreground hover:text-foreground">
                     Login
                   </Button>
                 </Link>
-                <Link href="/signup">
+                <Link href="https://axile.ng/signup">
                   <Button className="bg-primary hover:bg-primary/90 text-white px-6">
                     Get Started
                   </Button>
@@ -306,7 +306,7 @@ const Header = () => {
                         Home
                       </Link>
                        <Link
-                         href="/referral"
+                         href="https://referral.axile.ng"
                          onClick={closeMenu}
                          className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800 text-gray-300 hover:text-white transition-colors w-full"
                        >
@@ -337,12 +337,12 @@ const Header = () => {
                         <Briefcase className="h-5 w-5" />
                         Hiring
                       </Link>
-                      <Link href="/login" onClick={closeMenu}>
+                      <Link href="https://axile.ng/login" onClick={closeMenu}>
                         <Button variant="outline" className="w-full border-gray-700 text-gray-300 h-12">
                           Login
                         </Button>
                       </Link>
-                      <Link href="/signup" onClick={closeMenu}>
+                      <Link href="https://axile.ng/signup" onClick={closeMenu}>
                         <Button className="w-full bg-rose-600 hover:bg-rose-700 text-white h-12">
                           Get Started
                         </Button>

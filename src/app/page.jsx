@@ -182,7 +182,7 @@ const LandingPage = () => {
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
-              <Link href="/signup?tab=organizer">
+              <Link href="https://axile.ng/signup?tab=organizer">
                 <Button size="lg" variant="outline" className="h-16 px-12 text-lg border-border hover:bg-muted hover:border-primary/50 group rounded-2xl font-bold transition-all">
                   Start Selling Tickets
                   <TrendingUp className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
@@ -505,7 +505,7 @@ const LandingPage = () => {
               whileHover={{ scale: 1.05 }}
               className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
             >
-              <Link href="/signup">
+              <Link href="https://axile.ng/signup">
                 <Button size="lg" className="h-16 px-12 text-xl rounded-[1.2rem] bg-primary hover:bg-primary/90 shadow-2xl shadow-primary/30 hover:shadow-primary/50 transition-all font-black">
                   Get Started Free
                   <ArrowRight className="ml-2 h-6 w-6" />

@@ -3,6 +3,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useParams, useRouter } from "next/navigation";
 import api from "@/lib/axios";
+import Cookies from "js-cookie";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -364,6 +365,14 @@ const EventDetailsClient = ({ event_id, initialEvent }) => {
           created_at: new Date().toISOString()
         };
         localStorage.setItem(`booking_${bookingId}`, JSON.stringify(bookingDataForCheckout));
+        
+        // Use a shared cookie to bridge data to the app subdomain
+        Cookies.set(`booking_sync_${bookingId}`, JSON.stringify(bookingDataForCheckout), { 
+          domain: ".axile.ng", 
+          expires: 1/144, // 10 minutes session length is enough
+          secure: true,
+          sameSite: 'Lax'
+        });
         
         toast.success("Booking created! Redirecting to payment...", { id: toastId });
         router.push(`https://app.axile.ng/checkout/payment/${bookingId}`);

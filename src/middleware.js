@@ -24,6 +24,12 @@ export function middleware(request) {
     pathname === path || pathname.startsWith(`${path}/`)
   )
 
+  const isReferralPath = pathname === '/referral' || pathname.startsWith('/referral/')
+
+  if (isReferralPath) {
+    return NextResponse.redirect(`https://referral.axile.ng${pathname.replace('/referral', '')}`)
+  }
+
   if (shouldRedirect) {
     const url = new URL(request.url)
     // Redirect to the same path but on the app subdomain

@@ -111,7 +111,7 @@ const LandingPage = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-primary/20 overflow-x-hidden">
-      <section className="relative pt-28 pb-40 lg:pt-48 lg:pb-56 overflow-hidden">
+      <section className="relative pt-20 pb-32 lg:pt-28 lg:pb-48 overflow-hidden">
         {/* Animated Background */}
         <div className="absolute inset-0 pointer-events-none">
           <motion.div 

@@ -1,7 +1,7 @@
 import { getImageUrl } from "@/lib/utils";
 import EventDetailsClient from "./EventDetailsClient";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://radar-ufvb.onrender.com/";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.axile.ng";
 
 // Helper function to fetch event data server-side by event ID or slug

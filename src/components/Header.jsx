@@ -18,6 +18,14 @@ const Header = () => {
 
   const hasFetchedRef = React.useRef(false);
   const fetchingRef = React.useRef(false);
+  const { syncWithCookie } = useAuthStore();
+
+  // Cross-tab sync: Check for shared cookie on mount
+  React.useEffect(() => {
+    if (typeof window !== "undefined" && !token) {
+      syncWithCookie();
+    }
+  }, [token, syncWithCookie]);
 
   React.useEffect(() => {
     // Wait for store hydration and ensure we have a valid token before fetching

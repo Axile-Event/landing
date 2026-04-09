@@ -83,22 +83,41 @@ export const useAuthStore = create(
           user: { ...state.user, ...userData },
         })),
       
-      // Sync state from shared cookie if localStorage is empty
+      // Sync state from shared cookie
       syncWithCookie: () => {
-        if (typeof window === "undefined" || get().token) return;
+        if (typeof window === "undefined") return;
         
+        // Don't overwrite if already have a token
+        if (get().token) return;
+
         const shared = Cookies.get("axile_shared_auth");
         if (shared) {
           try {
-            const { token, refreshToken, role } = JSON.parse(shared);
+            // Cookies.get() sometimes returns URI encoded string, decode if necessary
+            const decoded = shared.startsWith("%") ? decodeURIComponent(shared) : shared;
+            const parsed = JSON.parse(decoded);
+            const { token, refreshToken, role } = parsed;
+            
             if (token) {
-              set({ token, refreshToken, role, isAuthenticated: true });
+              set({ 
+                token, 
+                refreshToken: refreshToken || null, 
+                role: role || null, 
+                isAuthenticated: true 
+              });
               if (startTokenRefreshTimer) startTokenRefreshTimer();
+              return true;
             }
           } catch (e) {
-            console.error("Failed to sync shared auth", e);
+            console.warn("Auth sync parsing failed, trying raw string...", e);
+            // Fallback: If it's just the token string
+            if (shared && shared.length > 50) {
+               set({ token: shared, isAuthenticated: true });
+               return true;
+            }
           }
         }
+        return false;
       }
     }),
     {

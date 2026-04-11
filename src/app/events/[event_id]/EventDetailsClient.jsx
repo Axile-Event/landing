@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useMemo } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import api from "@/lib/axios";
 import Cookies from "js-cookie";
 import { Button } from "@/components/ui/button";
@@ -79,6 +79,7 @@ const EventDetailsClient = ({ event_id, initialEvent }) => {
   // Booking state - now tracks quantities per category
   const [categories, setCategories] = useState([]);
   const [ticketSelections, setTicketSelections] = useState({}); // { category_id: quantity }
+  const [refUsername, setRefUsername] = useState("");
   const [copied, setCopied] = useState(false);
   const [isImageExpanded, setIsImageExpanded] = useState(false);
   const [shareUrl, setShareUrl] = useState("");
@@ -108,6 +109,30 @@ const EventDetailsClient = ({ event_id, initialEvent }) => {
         : allowedPaymentMethods[0],
     );
   }, [event?.event_id, allowedPaymentMethods]);
+
+  // Referral detection (Cookie & Query Param)
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    // 1. Check Query Parameter first (highest priority for fresh links)
+    const queryRef = searchParams.get("ref");
+    
+    // 2. Check Cookie
+    const cookieRef = Cookies.get("ref_username");
+    
+    if (queryRef) {
+      setRefUsername(queryRef);
+      // Update cookie if we have a fresh query param to ensure it persists cross-session
+      Cookies.set("ref_username", queryRef, { 
+        expires: 7, 
+        path: "/", 
+        domain: ".axile.ng",
+        sameSite: "lax",
+        secure: true
+      });
+    } else if (cookieRef) {
+      setRefUsername(cookieRef);
+    }
+  }, [searchParams]);
 
   // Restore ticket selections from localStorage after login redirect
   useEffect(() => {
@@ -329,6 +354,7 @@ const EventDetailsClient = ({ event_id, initialEvent }) => {
       const payload = {
         event_id: eventIdToUse,
         items: items,
+        ref_username: refUsername, // Pass referral username to backend
         ...(isPaidCheckout && { payment_method: checkoutPaymentMethod }),
         // Scoped referral source for event:TO-56363
         ...(eventIdToUse === "event:TO-56363" && {
@@ -375,7 +401,8 @@ const EventDetailsClient = ({ event_id, initialEvent }) => {
         });
         
         toast.success("Booking created! Redirecting to payment...", { id: toastId });
-        router.push(`https://app.axile.ng/checkout/payment/${bookingId}`);
+        const mainAppUrl = process.env.NEXT_PUBLIC_MAIN_APP_URL?.replace(/\/$/, "") || "https://app.axile.ng";
+        router.push(`${mainAppUrl}/checkout/payment/${bookingId}`);
         return;
       }
 
@@ -482,6 +509,24 @@ const EventDetailsClient = ({ event_id, initialEvent }) => {
               </span>
             </div>
           </div>
+
+          {/* Referral Badge */}
+          <AnimatePresence>
+            {refUsername && (
+              <motion.div 
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-rose-500/10 border border-rose-500/20 rounded-2xl p-4 flex items-center justify-center gap-3 shadow-xl shadow-rose-500/5"
+              >
+                <div className="w-8 h-8 rounded-full bg-rose-500 flex items-center justify-center text-white font-bold text-sm">
+                  {refUsername.charAt(0).toUpperCase()}
+                </div>
+                <p className="text-sm font-medium">
+                  You were referred by <span className="text-rose-500 font-bold">@{refUsername}</span>
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {/* Main Content - Left Column */}

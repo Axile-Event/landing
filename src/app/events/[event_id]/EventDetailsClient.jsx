@@ -419,7 +419,10 @@ const EventDetailsClient = ({ event_id, initialEvent }) => {
         
         toast.success("Booking created! Redirecting to payment...", { id: toastId });
         const mainAppUrl = process.env.NEXT_PUBLIC_MAIN_APP_URL?.replace(/\/$/, "") || "https://app.axile.ng";
-        router.push(`${mainAppUrl}/checkout/payment/${bookingId}`);
+        
+        // Use URL sync bridge for cross-domain dev/vercel environments
+        const syncData = encodeURIComponent(JSON.stringify(bookingDataForCheckout));
+        window.location.href = `${mainAppUrl}/checkout/payment/${bookingId}?booking_sync=${syncData}`;
         return;
       }
 

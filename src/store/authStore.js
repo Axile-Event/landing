@@ -107,13 +107,52 @@ export const useAuthStore = create(
       syncWithCookie: () => {
         if (typeof window === "undefined") return;
         
-        // Don't overwrite if already have a token
-        if (get().token) return;
+        // 1. Cross-Domain Session Bridge: Check URL for sync data
+        // This is necessary for dev environments like .vercel.app where cross-subdomain cookies are blocked
+        const searchParams = new URLSearchParams(window.location.search);
+        const urlSyncData = searchParams.get("ax_sync");
+        
+        if (urlSyncData) {
+          try {
+            const decoded = decodeURIComponent(urlSyncData);
+            const parsed = JSON.parse(decoded);
+            const { token, refreshToken, role } = parsed;
+            
+            if (token) {
+              set({ 
+                token, 
+                refreshToken: refreshToken || null, 
+                role: role || null, 
+                isAuthenticated: true 
+              });
 
+              // Set a LOCAL cookie so the session persists on this domain too
+              const cookieOpts = { 
+                expires: 7, 
+                path: "/",
+                sameSite: 'Lax',
+                secure: window.location.protocol === 'https:'
+              };
+              // Persist locally for future loads
+              Cookies.set("axile_shared_auth", decoded, cookieOpts);
+
+              // Clean up the URL
+              const newUrl = new URL(window.location.href);
+              newUrl.searchParams.delete("ax_sync");
+              window.history.replaceState({}, '', newUrl.toString());
+              
+              if (startTokenRefreshTimer) startTokenRefreshTimer();
+              return true;
+            }
+          } catch (e) {
+            console.error("Session bridge sync failed", e);
+          }
+        }
+
+        // 2. Standard Cookie Sync (Works on .axile.ng subdomains)
         const shared = Cookies.get("axile_shared_auth");
         if (shared) {
           try {
-            // Cookies.get() sometimes returns URI encoded string, decode if necessary
             const decoded = shared.startsWith("%") ? decodeURIComponent(shared) : shared;
             const parsed = JSON.parse(decoded);
             const { token, refreshToken, role } = parsed;
@@ -129,12 +168,7 @@ export const useAuthStore = create(
               return true;
             }
           } catch (e) {
-            console.warn("Auth sync parsing failed, trying raw string...", e);
-            // Fallback: If it's just the token string
-            if (shared && shared.length > 50) {
-               set({ token: shared, isAuthenticated: true });
-               return true;
-            }
+            console.warn("Auth sync parsing failed", e);
           }
         }
         return false;

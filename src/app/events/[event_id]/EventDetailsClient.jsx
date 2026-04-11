@@ -28,6 +28,20 @@ const calculatePaystackFee = (amount) => {
   return Math.min(fee, 2000);
 };
 
+/**
+ * Get the correct cookie domain for cross-subdomain sharing.
+ * Production (.axile.ng): returns ".axile.ng"
+ * Dev/Vercel/localhost: returns undefined (current domain only)
+ */
+function getCookieDomain() {
+  if (typeof window === "undefined") return undefined;
+  const hostname = window.location.hostname;
+  if (hostname.endsWith(".axile.ng") || hostname === "axile.ng") {
+    return ".axile.ng";
+  }
+  return undefined;
+}
+
 const VALID_PAYMENT_METHODS = new Set(["paystack", "manual_bank_transfer"]);
 
 function extractAllowedPaymentMethods(event) {
@@ -122,13 +136,16 @@ const EventDetailsClient = ({ event_id, initialEvent }) => {
     if (queryRef) {
       setRefUsername(queryRef);
       // Update cookie if we have a fresh query param to ensure it persists cross-session
-      Cookies.set("ref_username", queryRef, { 
+      const cookieOpts = { 
         expires: 7, 
         path: "/", 
-        domain: ".axile.ng",
         sameSite: "lax",
-        secure: true
-      });
+        secure: window.location.protocol === "https:"
+      };
+      const domain = getCookieDomain();
+      if (domain) cookieOpts.domain = domain;
+      
+      Cookies.set("ref_username", queryRef, cookieOpts);
     } else if (cookieRef) {
       setRefUsername(cookieRef);
     }
@@ -394,9 +411,9 @@ const EventDetailsClient = ({ event_id, initialEvent }) => {
         
         // Use a shared cookie to bridge data to the app subdomain
         Cookies.set(`booking_sync_${bookingId}`, JSON.stringify(bookingDataForCheckout), { 
-          domain: ".axile.ng", 
+          ...(getCookieDomain() ? { domain: getCookieDomain() } : {}),
           expires: 1/144, // 10 minutes session length is enough
-          secure: true,
+          secure: window.location.protocol === "https:",
           sameSite: 'Lax'
         });
         

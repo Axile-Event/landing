@@ -264,7 +264,8 @@ api.interceptors.response.use(
                 currentPath.startsWith("/hiring/");
 
               if (typeof window !== "undefined" && !isPublicPath) {
-                window.location.href = "https://app.axile.ng/login";
+                const mainAppUrl = (process.env.NEXT_PUBLIC_MAIN_APP_URL || "https://app.axile.ng").replace(/\/$/, "");
+                window.location.href = `${mainAppUrl}/login`;
               }
             }
 

@@ -26,8 +26,8 @@ export function middleware(request) {
 
   if (shouldRedirect) {
     const url = new URL(request.url)
-    // Redirect to the same path but on the app subdomain
-    return NextResponse.redirect(`https://app.axile.ng${pathname}${url.search}`)
+    const mainAppUrl = (process.env.NEXT_PUBLIC_MAIN_APP_URL || 'https://app.axile.ng').replace(/\/$/, '')
+    return NextResponse.redirect(`${mainAppUrl}${pathname}${url.search}`)
   }
 
   return NextResponse.next()

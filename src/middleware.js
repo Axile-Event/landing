@@ -33,7 +33,7 @@ export function middleware(request) {
   return NextResponse.next()
 }
 
-// See "Matching Paths" below to learn more
+// See "Matching Paths" below to learn moree
 export const config = {
   matcher: [
     '/login/:path*',

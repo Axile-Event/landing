@@ -265,7 +265,8 @@ api.interceptors.response.use(
 
               if (typeof window !== "undefined" && !isPublicPath) {
                 const mainAppUrl = (process.env.NEXT_PUBLIC_MAIN_APP_URL || "https://app.axile.ng").replace(/\/$/, "");
-                window.location.href = `${mainAppUrl}/login`;
+                const callbackUrl = encodeURIComponent(window.location.href);
+                window.location.href = `${mainAppUrl}/login?callbackUrl=${callbackUrl}`;
               }
             }
 

@@ -324,10 +324,10 @@ const EventDetailsClient = ({ event_id, initialEvent }) => {
       }
       
       toast.error("Please login to book tickets");
-      const currentPath = window.location.pathname;
-      const callbackUrl = encodeURIComponent(currentPath);
+      const mainAppUrl = (process.env.NEXT_PUBLIC_MAIN_APP_URL || "https://app.axile.ng").replace(/\/$/, "");
+      const callbackUrl = encodeURIComponent(window.location.href);
       setTimeout(() => {
-        router.push(`/login?callbackUrl=${callbackUrl}`);
+        window.location.href = `${mainAppUrl}/login?callbackUrl=${callbackUrl}`;
       }, 1500);
       return;
     }

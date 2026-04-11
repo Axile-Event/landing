@@ -148,12 +148,12 @@ const Header = () => {
               </>
             ) : (
               <div className="flex items-center gap-3">
-                <Link href={`${process.env.NEXT_PUBLIC_MAIN_APP_URL?.replace(/\/$/, "") || "https://app.axile.ng"}/login`}>
+                <Link href={`${process.env.NEXT_PUBLIC_MAIN_APP_URL?.replace(/\/$/, "") || "https://app.axile.ng"}/login?callbackUrl=${typeof window !== 'undefined' ? encodeURIComponent(window.location.href) : ''}`}>
                   <Button variant="ghost" className="text-muted-foreground hover:text-foreground">
                     Login
                   </Button>
                 </Link>
-                <Link href={`${process.env.NEXT_PUBLIC_MAIN_APP_URL?.replace(/\/$/, "") || "https://app.axile.ng"}/signup`}>
+                <Link href={`${process.env.NEXT_PUBLIC_MAIN_APP_URL?.replace(/\/$/, "") || "https://app.axile.ng"}/signup?callbackUrl=${typeof window !== 'undefined' ? encodeURIComponent(window.location.href) : ''}`}>
                   <Button className="bg-primary hover:bg-primary/90 text-white px-6">
                     Get Started
                   </Button>
@@ -355,12 +355,12 @@ const Header = () => {
                         <Briefcase className="h-5 w-5" />
                         Hiring
                       </Link>
-                      <Link href={`${process.env.NEXT_PUBLIC_MAIN_APP_URL?.replace(/\/$/, "") || "https://app.axile.ng"}/login`} onClick={closeMenu}>
+                      <Link href={`${process.env.NEXT_PUBLIC_MAIN_APP_URL?.replace(/\/$/, "") || "https://app.axile.ng"}/login?callbackUrl=${typeof window !== 'undefined' ? encodeURIComponent(window.location.href) : ''}`} onClick={closeMenu}>
                         <Button variant="outline" className="w-full border-gray-700 text-gray-300 h-12">
                           Login
                         </Button>
                       </Link>
-                      <Link href={`${process.env.NEXT_PUBLIC_MAIN_APP_URL?.replace(/\/$/, "") || "https://app.axile.ng"}/signup`} onClick={closeMenu}>
+                      <Link href={`${process.env.NEXT_PUBLIC_MAIN_APP_URL?.replace(/\/$/, "") || "https://app.axile.ng"}/signup?callbackUrl=${typeof window !== 'undefined' ? encodeURIComponent(window.location.href) : ''}`} onClick={closeMenu}>
                         <Button className="w-full bg-rose-600 hover:bg-rose-700 text-white h-12">
                           Get Started
                         </Button>

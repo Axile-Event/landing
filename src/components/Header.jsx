@@ -324,7 +324,7 @@ const Header = () => {
                         Home
                       </Link>
                        <Link
-                         href={process.env.NEXT_PUBLIC_REFERRAL_URL || "https://referral.axile.ng"}
+                         href={`${process.env.NEXT_PUBLIC_LANDING_URL || "https://axile.ng"}/referral`}
                          onClick={closeMenu}
                          className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800 text-gray-300 hover:text-white transition-colors w-full"
                        >

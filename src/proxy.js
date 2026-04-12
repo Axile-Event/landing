@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 
-export function middleware(request) {
+export function proxy(request) {
   const { pathname } = request.nextUrl
   
   // Define paths that should be redirected to the main app (app.axile.ng)

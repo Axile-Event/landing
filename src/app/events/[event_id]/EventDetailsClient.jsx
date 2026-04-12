@@ -4,6 +4,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import api from "@/lib/axios";
 import Cookies from "js-cookie";
+import { getCookie, setCookie } from "@/lib/utils/cookies";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -28,11 +29,6 @@ const calculatePaystackFee = (amount) => {
   return Math.min(fee, 2000);
 };
 
-/**
- * Get the correct cookie domain for cross-subdomain sharing.
- * Production (.axile.ng): returns ".axile.ng"
- * Dev/Vercel/localhost: returns undefined (current domain only)
- */
 function getCookieDomain() {
   if (typeof window === "undefined") return undefined;
   const hostname = window.location.hostname;
@@ -130,24 +126,17 @@ const EventDetailsClient = ({ event_id, initialEvent }) => {
     // 1. Check Query Parameter first (highest priority for fresh links)
     const queryRef = searchParams.get("ref");
     
-    // 2. Check Cookie
-    const cookieRef = Cookies.get("ref_username");
+    // 2. Check Cookie (Use centralized utility)
+    const cookieRef = getCookie("ref_username");
     
     if (queryRef) {
       setRefUsername(queryRef);
       // Update cookie if we have a fresh query param to ensure it persists cross-session
-      const cookieOpts = { 
-        expires: 7, 
-        path: "/", 
-        sameSite: "lax",
-        secure: window.location.protocol === "https:"
-      };
-      const domain = getCookieDomain();
-      if (domain) cookieOpts.domain = domain;
-      
-      Cookies.set("ref_username", queryRef, cookieOpts);
+      setCookie("ref_username", queryRef, 7);
+      console.log("[Referral] ref_username captured from URL:", queryRef);
     } else if (cookieRef) {
       setRefUsername(cookieRef);
+      console.log("[Referral] ref_username detected from cookie:", cookieRef);
     }
   }, [searchParams]);
 
@@ -371,7 +360,7 @@ const EventDetailsClient = ({ event_id, initialEvent }) => {
       const payload = {
         event_id: eventIdToUse,
         items: items,
-        ref_username: refUsername, // Pass referral username to backend
+        referral: refUsername, // Pass referee username as 'referral' to backend
         ...(isPaidCheckout && { payment_method: checkoutPaymentMethod }),
         // Scoped referral source for event:TO-56363
         ...(eventIdToUse === "event:TO-56363" && {

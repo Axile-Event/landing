@@ -79,10 +79,13 @@ export const useAuthStore = create(
       },
       logout: () => {
         if (typeof window !== "undefined") {
-          const removeOpts = {};
+          // 1. Remove from parent domain (.axile.ng)
           const domain = getCookieDomain();
-          if (domain) removeOpts.domain = domain;
-          Cookies.remove("axile_shared_auth", removeOpts);
+          if (domain) {
+            Cookies.remove("axile_shared_auth", { domain });
+          }
+          // 2. Remove from current subdomain (just in case it was set locally)
+          Cookies.remove("axile_shared_auth", { path: '/' });
         }
 
         if (stopTokenRefreshTimer) {
@@ -133,7 +136,10 @@ export const useAuthStore = create(
                 sameSite: 'Lax',
                 secure: window.location.protocol === 'https:'
               };
-              // Persist locally for future loads
+              // Persist locally using shared domain if available for global visibility
+              const domain = getCookieDomain();
+              if (domain) cookieOpts.domain = domain;
+              
               Cookies.set("axile_shared_auth", decoded, cookieOpts);
 
               // Clean up the URL

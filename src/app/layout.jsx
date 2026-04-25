@@ -54,20 +54,19 @@ export const metadata = {
     description: "Create events and sell tickets securely. Discover and book experiences across Nigeria with the Axile event platform.",
     images: ["/og-image.png"],
   },
-  icons: {
     icon: [
       { url: "/axile-logo-cropped.png?v=8", sizes: "32x32", type: "image/png" },
-      { url: "/axile-logo-cropped.png?v=8", sizes: "96x96", type: "image/png" },
-      { url: "/axile-logo-cropped.png?v=8", sizes: "180x180", type: "image/png" },
-      { url: "/axile-logo-cropped.png?v=8", sizes: "192x192", type: "image/png" },
-      { url: "/axile-logo-cropped.png?v=8", sizes: "512x512", type: "image/png" },
+      { url: "/axile-logo-cropped_bg.png", sizes: "96x96", type: "image/png" },
+      { url: "/axile-logo-cropped_bg.png", sizes: "180x180", type: "image/png" },
+      { url: "/axile-logo-cropped_bg.png", sizes: "192x192", type: "image/png" },
+      { url: "/axile-logo-cropped_bg.png", sizes: "512x512", type: "image/png" },
     ],
     shortcut: "/axile-logo-cropped.png?v=8",
-    apple: "/axile-logo-cropped.png?v=8",
+    apple: "/axile-logo-cropped_bg.png",
     other: [
       {
         rel: "apple-touch-icon-precomposed",
-        url: "/axile-logo-cropped.png?v=8",
+        url: "/axile-logo-cropped_bg.png",
       },
     ],
   },
@@ -91,9 +90,10 @@ export default function RootLayout({ children }) {
         <meta name="color-scheme" content="dark light" />
         <meta httpEquiv="Permissions-Policy" content="camera=(self), microphone=(self)" />
         <link rel="icon" href="/axile-logo-cropped.png?v=8" sizes="any" />
+        <link rel="icon" href="/axile-logo-cropped_bg.png" type="image/png" sizes="192x192" />
         <link rel="shortcut icon" href="/axile-logo-cropped.png?v=8" type="image/png" />
-        <link rel="apple-touch-icon" href="/axile-logo-cropped.png?v=8" />
-        <meta name="msapplication-TileImage" content="/axile-logo-cropped.png?v=8" />
+        <link rel="apple-touch-icon" href="/axile-logo-cropped_bg.png" />
+        <meta name="msapplication-TileImage" content="/axile-logo-cropped_bg.png" />
       </head>
       <body
         suppressHydrationWarning

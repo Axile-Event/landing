@@ -3,12 +3,12 @@
   "short_name": "Axile",
   "icons": [
     {
-      "src": "/axile-logo-cropped.png?v=8",
+      "src": "/axile-logo-cropped_bg.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/axile-logo-cropped.png?v=8",
+      "src": "/axile-logo-cropped_bg.png",
       "sizes": "512x512",
       "type": "image/png"
     }
